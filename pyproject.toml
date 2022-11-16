@@ -8,11 +8,22 @@ version = "0.0.1"
 description = "pycarot - python tools"
 readme = "README.md"
 authors = [{ name = "BaySiyah", email = "siyah@ksknsy.de" }]
-license = { file = "LICENSE" }
+license = "MIT License"
 classifiers = [
     "License :: OSI Approved :: MIT License",
+    "Intended Audience :: Students",
+    "Intended Audience :: Developers",
+    "Operating System :: Microsoft :: Windows",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Typing :: Typed",
 ]
 keywords = ["dependency", "injection", "event", "IoC", "container"]
 dependencies = []
