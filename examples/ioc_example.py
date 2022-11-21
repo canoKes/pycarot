@@ -2,6 +2,8 @@ import traceback
 from dataclasses import dataclass
 from typing import Any, Protocol
 
+from pycarot import ioc
+
 
 @dataclass
 class DbConfiguration:
@@ -46,3 +48,42 @@ class Repository(IRepository):
         with self.connector:
             print(">> get data from repository")
             return ["seems", "working", "!!"]
+
+
+@dataclass
+class Service:
+    repository: IRepository
+
+    def get_message(self) -> None:
+        data = self.repository.get_data()
+        print(f">> message: {' '.join(data)}")
+
+
+@dataclass
+class Client:
+    service: Service
+
+    def do_action(self):
+        self.service.get_message()
+
+
+def configure_ioc() -> None:
+    container = ioc.Container()
+    ioc.set_container(container)
+
+    config = DbConfiguration("localhost", "admin", "", "test_db")
+    ioc.register_singleton(DbConfiguration, instance=config)
+    ioc.register_instance(DbConnector, kwds={"name": "MYSQL"})
+    ioc.register(Repository, IRepository)
+    ioc.register(Service)
+    ioc.register(Client)
+
+
+def main() -> None:
+    configure_ioc()
+    client = ioc.get(Client)
+    client.do_action()
+
+
+if __name__ == "__main__":
+    main()
