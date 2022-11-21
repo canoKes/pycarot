@@ -1,37 +1,44 @@
-from dataclasses import dataclass, field
 from typing import Any
 
 
-@dataclass
 class Entry:
     """Base class of all entry types."""
 
-    implementation: type
-    service: type = None
-
-    def __post_init__(self) -> None:
-        if not isinstance(self.implementation, type):
-            raise ValueError("implementation has to be a type")
-        if self.service is None:
-            self.service = self.implementation
-        if not isinstance(self.service, type):
-            raise ValueError("service has to be a type")
+    __slots__ = ("implementation", "service")
 
     @property
     def key(self) -> str:
         return self.service.__name__
 
+    def __init__(self, implementation: type, service: type = None) -> None:
+        if not isinstance(implementation, type):
+            raise ValueError("implementation has to be a type")
+        if service is None:
+            service = implementation
+        if not isinstance(service, type):
+            raise ValueError("service has to be a type")
 
-@dataclass
+        self.implementation = implementation
+        self.service = service
+
+
+
 class InstanceEntry(Entry):
     """Returns a preconstructed instance."""
 
-    arguments: tuple = field(default_factory=tuple)
-    keywords: dict[str, Any] = field(default_factory=dict)
+    __slots__ = ("arguments", "keywords")
+
+    def __init__(self, implementation: type, service: type = None, arguments: tuple[Any] = None, keywords: dict[str, Any] = None) -> None:
+        super().__init__(implementation, service)
+        self.arguments = arguments if arguments is not None else ()
+        self.keywords = keywords if keywords is not None else {}
 
 
-@dataclass
 class SingletonEntry(Entry):
     """A singlton entry. Returns always the same instance of an object."""
 
-    instance: object = None
+    __slots__ = ("instance",)
+
+    def __init__(self, implementation: type, service: type = None, instance: object = None) -> None:
+        super().__init__(implementation, service)
+        self.instance = instance
