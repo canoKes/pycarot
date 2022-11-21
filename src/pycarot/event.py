@@ -1,65 +1,56 @@
 import threading
-from abc import ABC
-from dataclasses import dataclass, field
-from datetime import datetime
 
 
-class Event(ABC):
+class Event:
     """Base class for all custom events"""
 
-    def __str__(self) -> str:
-        items = [f"{k}={v}" for k, v in vars(self).items() if not k.startswith("__")]
-        return f"[{ datetime.now() }] {type(self).__name__} ({ ', '.join(items) })"
 
+class EventManager:
+    __slots__ = ("_subs", "_entries")
 
-SubEntryMap = dict[int, list[type]]
-
-
-@dataclass
-class EventAggregator:
-    __subs: dict[int, object] = field(default_factory=dict)
-    __entries: SubEntryMap = field(default_factory=dict)
+    def __init__(self) -> None:
+        self._subs: dict[int, object] = {}
+        self._entries: dict[int, list[type]] = {}
 
     def subscribe(self, subscriber: object) -> None:
-        self.__subscribe(subscriber)
+        self._subscribe(subscriber)
 
-    def __subscribe(self, subscriber: object) -> int:
+    def _subscribe(self, subscriber: object) -> int:
         sid = id(subscriber)
-        if not sid in self.__subs:
-            self.__subs[sid] = subscriber
+        if not sid in self._subs:
+            self._subs[sid] = subscriber
         return sid
 
     def unsubscribe(self, subscriber: object) -> None:
         sid = id(subscriber)
-        if not sid in self.__subs:
+        if not sid in self._subs:
             return
-        del self.__subs[sid]
-        if sid in self.__entries:
-            del self.__entries[sid]
+        del self._subs[sid]
+        if sid in self._entries:
+            del self._entries[sid]
 
     def register_for(self, subscriber: object, EventType: type) -> None:
-        sid = self.__subscribe(subscriber)
-        if not sid in self.__entries:
-            self.__entries[sid] = []
-        self.__entries[sid].append(EventType)
+        sid = self._subscribe(subscriber)
+        if not sid in self._entries:
+            self._entries[sid] = []
+        self._entries[sid].append(EventType)
 
     def unregister(self, subscriber: object, EventType: type) -> None:
         sid = id(subscriber)
-        if not sid in self.__entries:
+        if not sid in self._entries:
             return
-        if EventType in self.__entries[sid]:
-            self.__entries[sid].remove(EventType)
+        if EventType in self._entries[sid]:
+            self._entries[sid].remove(EventType)
 
     def publish(self, sender, event: Event) -> None:
-        subs = self.__subs.copy()
+        subs = self._subs.copy()
         for sid in subs:
-            if not sid in self.__entries:
+            if not sid in self._entries:
                 continue
-            if not type(event) in self.__entries[sid]:
+            if not type(event) in self._entries[sid]:
                 continue
-            getattr(subs[sid], f"on_{ event.name }")(sender, event)
+            name = str.lower(type(event).__name__)
+            getattr(subs[sid], f"on_{ name }")(sender, event)
 
     def publish_async(self, sender, event: Event) -> None:
-        thread = threading.Thread(target=self.publish, args=(sender, event))
-        thread.daemon = True
-        thread.start()
+        threading.Thread(target=self.publish, args=(sender, event), daemon=True).start()
