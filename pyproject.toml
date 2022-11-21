@@ -39,9 +39,9 @@ pycarot = "pycarot.__main__:main"
 current_version = "0.0.1"
 version_pattern = "MAJOR.MINOR.PATCH"
 commit_message = "bump version {old_version} -> {new_version}"
-commit = false
-tag = false
-push = false
+commit = true
+tag = true
+push = true
 
 [tool.bumpver.file_patterns]
 "pyproject.toml" = [
