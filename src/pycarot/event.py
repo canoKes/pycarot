@@ -4,6 +4,20 @@ import threading
 class Event:
     """Base class for all custom events"""
 
+    @property
+    def name(self) -> str:
+        return type(self).__name__
+
+    def __str__(self) -> str:
+        attributes = vars(self).items()
+        out = self.name
+        if attributes:
+            out +=  f" {', '.join([f'{k}({v})' for k, v in attributes])}"
+        return out
+
+    def __repr__(self) -> str:
+        return str(self)
+
 
 class EventManager:
     __slots__ = ("_subs", "_entries")
@@ -49,8 +63,7 @@ class EventManager:
                 continue
             if not type(event) in self._entries[sid]:
                 continue
-            name = str.lower(type(event).__name__)
-            getattr(subs[sid], f"on_{ name }")(sender, event)
+            getattr(subs[sid], f"on_{ event.name.lower() }")(event, sender)
 
     def publish_async(self, sender, event: Event) -> None:
-        threading.Thread(target=self.publish, args=(sender, event), daemon=True).start()
+        threading.Thread(target=self.publish, args=(event, sender), daemon=True).start()
