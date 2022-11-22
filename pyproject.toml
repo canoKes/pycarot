@@ -1,5 +1,8 @@
 [build-system]
-requires = ["setuptools>=42.0.0", "wheel"]
+requires = [ 
+    "setuptools>=42.0.0", 
+    "wheel",
+]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -7,8 +10,15 @@ name = "pycarot"
 version = "0.0.3"
 description = "pycarot - python tools"
 readme = "README.md"
-authors = [{ name = "BaySiyah", email = "siyah@ksknsy.de" }]
-license = {text = "MIT License"}
+authors = [
+    { 
+        name = "BaySiyah", 
+        email = "siyah@ksknsy.de",
+    }
+]
+license = { 
+    text = "MIT License",
+}
 classifiers = [
     "License :: OSI Approved :: MIT License",
     "Intended Audience :: Developers",
@@ -24,8 +34,18 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Typing :: Typed",
 ]
-keywords = ["dependency", "injection", "event", "IoC", "container", "progress", "progressbar"]
-dependencies = []
+keywords = [
+    "dependency", 
+    "injection", 
+    "event", 
+    "IoC", 
+    "container", 
+    "progress", 
+    "progressbar",
+]
+dependencies = [
+    "colorama == 0.4.6",
+]
 requires-python = ">=3.6"
 
 [project.urls]
@@ -45,8 +65,8 @@ push = false
 [tool.bumpver.file_patterns]
 "pyproject.toml" = [
     'current_version = "{version}"',
-    'version = "{version}"'
+    'version = "{version}"',
 ]
 "src/pycarot/__init__.py" = [
-    "{version}"
+    "{version}",
 ]
