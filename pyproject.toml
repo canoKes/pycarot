@@ -8,7 +8,7 @@ version = "0.0.1"
 description = "pycarot - python tools"
 readme = "README.md"
 authors = [{ name = "BaySiyah", email = "siyah@ksknsy.de" }]
-license = "MIT License"
+license = { text = "MIT License" }
 classifiers = [
     "License :: OSI Approved :: MIT License",
     "Intended Audience :: Students",
