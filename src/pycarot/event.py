@@ -57,7 +57,7 @@ class EventAggregator:
                 continue
             if not type(event) in self.__entries[sid]:
                 continue
-            getattr(subs[sid], f"on_{ event.name }")(sender, event)
+            getattr(subs[sid], f"on_{ type(event).__name__.lower() }")(sender, event)
 
     def publish_async(self, sender, event: Event) -> None:
         thread = threading.Thread(target=self.publish, args=(sender, event))
