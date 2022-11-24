@@ -1,8 +1,7 @@
 import time
-import numpy as np
 from pycarot.progress import ProgressBar
 
-values = np.arange(250)
+values = [i for i in range(250)]
 delay = 0.005
 
 ######################
