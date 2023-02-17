@@ -13,7 +13,7 @@ readme = "README.md"
 authors = [
     { 
         name = "BaySiyah", 
-        email = "siyah@ksknsy.de",
+        email = "siyah@keskinsoy.com",
     }
 ]
 license = { 
@@ -26,12 +26,7 @@ classifiers = [
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.6",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
     "Typing :: Typed",
 ]
 keywords = [
@@ -46,7 +41,7 @@ keywords = [
 dependencies = [
     "colorama == 0.4.6",
 ]
-requires-python = ">=3.6"
+requires-python = ">=3.9"
 
 [project.urls]
 Homepage = "https://github.com/BaySiyah/pycarot"
