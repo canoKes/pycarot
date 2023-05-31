@@ -5,7 +5,7 @@ from colorama import Fore, Style
 
 
 class ProgressBar:
-    __slots__ = ("value", "total", "elements","title", "digits", "percentage")
+    __slots__ = ("value", "total", "elements", "title", "digits", "percentage")
 
     MAX_SIZE = 50
 

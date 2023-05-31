@@ -12,7 +12,7 @@ class Event:
         attributes = vars(self).items()
         out = self.name
         if attributes:
-            out +=  f" {', '.join([f'{k}({v})' for k, v in attributes])}"
+            out += f" {', '.join([f'{k}({v})' for k, v in attributes])}"
         return out
 
     def __repr__(self) -> str:

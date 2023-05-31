@@ -22,13 +22,18 @@ class Entry:
         self.service = service
 
 
-
 class InstanceEntry(Entry):
     """Returns a preconstructed instance."""
 
     __slots__ = ("arguments", "keywords")
 
-    def __init__(self, implementation: type, service: type = None, arguments: tuple[Any] = None, keywords: dict[str, Any] = None) -> None:
+    def __init__(
+        self,
+        implementation: type,
+        service: type = None,
+        arguments: tuple[Any] = None,
+        keywords: dict[str, Any] = None,
+    ) -> None:
         super().__init__(implementation, service)
         self.arguments = arguments if arguments is not None else ()
         self.keywords = keywords if keywords is not None else {}
