@@ -37,9 +37,6 @@ dependencies = [
 
 [project.urls]
 homepage = "https://github.com/canoKes/pycarot"
-documentation = ""
-repository = ""
-changelog = ""
 
 [project.scripts]
 pycarot = "pycarot.__main__:main"
